@@ -1,7 +1,8 @@
 function makeSquares(squaresPerSide = 16) {
     let squareWidth = (950 / squaresPerSide) - 4;
     let squareHeight = (800 / squaresPerSide) - 4;
-    console.log(`${squareHeight} ${squareWidth}`);
+
+    deleteSquares(squaresPerSide);
     for (let i = 0; i < squaresPerSide * squaresPerSide; i++) {
         let square = document.createElement('div');
         square.classList.toggle('unfilled');
@@ -10,15 +11,14 @@ function makeSquares(squaresPerSide = 16) {
         parentDiv.appendChild(square);
     }
 }
-
-let squares = document.querySelectorAll('div.unfilled');
-squares.forEach((hover) => {
-    hover.addEventListener('mouseover', () => {
-        hover.target.style.background = 'red';
-});
-});
-
-
+function deleteSquares() {
+    let squares = document.querySelectorAll('div.unfilled');
+    if (parentDiv.hasChildNodes) {
+        for (let i = 0; i < squares.length; i++) {
+        squares[i].remove();
+    }
+}
+}
 const askUser = document.createElement('button');
 askUser.setAttribute('id', 'ask-user');
 askUser.textContent = 'Set the Number of Squares per Side';
@@ -28,3 +28,20 @@ const parentDiv = document.createElement('div');
 parentDiv.setAttribute('id', 'parent-div');
 document.body.appendChild(parentDiv);
 makeSquares();
+    let userChoice = document.getElementById('ask-user');
+    userChoice.addEventListener('click', resetSquare);
+    function resetSquare() {
+        let userNum;
+        while (userNum > 100 || userNum == 0) {
+            userNum = +prompt('How many squares per row and column?', 0);
+        }
+        makeSquares(userNum);
+    }
+
+    parentDiv.onmouseover = hover;
+function hover(event) {
+    if (event.type == 'mouseover') {
+        event.target.style.backgroundColor = '#b10d0d';   
+    }
+}
+
