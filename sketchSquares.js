@@ -17,6 +17,7 @@ function deleteSquares() {
         for (let i = 0; i < squares.length; i++) {
         squares[i].remove();
     }
+    return;
 }
 }
 const askUser = document.createElement('button');
@@ -29,15 +30,14 @@ parentDiv.setAttribute('id', 'parent-div');
 document.body.appendChild(parentDiv);
 makeSquares();
     let userChoice = document.getElementById('ask-user');
-    userChoice.addEventListener('click', resetSquare);
-    function resetSquare() {
+    userChoice.addEventListener('click', () => {
         let userNum;
-        while (userNum > 100 || userNum == 0) {
-            userNum = +prompt('How many squares per row and column?', 0);
+        do {
+            userNum = prompt('How many squares per row and column?', 0);
         }
+        while (userNum > 100 && userNum)
         makeSquares(userNum);
-    }
-
+    });
     parentDiv.onmouseover = hover;
 function hover(event) {
     if (event.type == 'mouseover') {
