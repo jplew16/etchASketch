@@ -1,14 +1,15 @@
 function makeSquares(squaresPerSide = 16) {
-    let squareWidth = (950 / squaresPerSide) - 4;
-    let squareHeight = (800 / squaresPerSide) - 4;
+    let squareWidth = (100 / squaresPerSide);
+    let squareHeight = (100 / squaresPerSide);
 
     deleteSquares(squaresPerSide);
     for (let i = 0; i < squaresPerSide * squaresPerSide; i++) {
         let square = document.createElement('div');
         square.classList.toggle('unfilled');
-        square.style.width = squareWidth + 'px';
-        square.style.height = squareHeight + 'px';
+        square.style.width = squareWidth + '%';
+        square.style.height = squareHeight + '%';
         parentDiv.appendChild(square);
+        square.addEventListener('mouseover', fillSquares);
     }
 }
 function deleteSquares() {
@@ -22,12 +23,22 @@ function deleteSquares() {
 }
 const askUser = document.createElement('button');
 askUser.setAttribute('id', 'ask-user');
-askUser.textContent = 'Set the Number of Squares per Side';
+askUser.textContent = 'Adjust Squares';
 document.body.appendChild(askUser);
 
 const parentDiv = document.createElement('div');
 parentDiv.setAttribute('id', 'parent-div');
 document.body.appendChild(parentDiv);
+let makeRandomColors = () => {
+return `rbg(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`
+}
+let randomColors = [0,0,0];
+let fillSquares = (event) => {
+    for (let i = 0; i < 3; i++) {
+        randomColors[i] = (Math.floor(Math.random() * 255));
+    }
+    event.target.style.backgroundColor = `rgb(${randomColors[0]} ${randomColors[1]} ${randomColors[2]})`;
+}
 makeSquares();
     let userChoice = document.getElementById('ask-user');
     userChoice.addEventListener('click', () => {
@@ -38,10 +49,4 @@ makeSquares();
         while (userNum > 100 && userNum)
         makeSquares(userNum);
     });
-    parentDiv.onmouseover = hover;
-function hover(event) {
-    if (event.type == 'mouseover') {
-        event.target.style.backgroundColor = '#b10d0d';   
-    }
-}
 
